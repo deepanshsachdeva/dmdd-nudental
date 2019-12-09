@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get("drugs", "DrugController@index")->name('drugs.index');
+Route::get("drugs/{id}", "DrugController@find")->name('drugs.find');
