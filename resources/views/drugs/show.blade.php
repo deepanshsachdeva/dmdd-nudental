@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', 'NUDental - Show Drug')
+@section('title', 'Show Drug')
 @section('content')
 <a href="{{ route('drugs.index') }}">Back</a>
 <h1>{{ $drug['name'] }}</h1>

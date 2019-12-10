@@ -23,6 +23,11 @@ class DrugController extends Controller
     }
 
     public function create() {
+        $validatedData = request()->validate([
+            'name' => 'required|max:255',
+            'code' => 'required|max:3',
+        ]);
+
         $name = request()->input('name');
         $code = request()->input('code');
         $is_active = (request()->input('available'))?true:false;
