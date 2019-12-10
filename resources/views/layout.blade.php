@@ -8,11 +8,14 @@
         <title>@yield('title')</title>
         
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     </head>
     <body>
         <div class="container-fluid">
             @yield('content')
         </div>
         <script src="{{ mix('js/app.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/custom.js') }}" type="text/javascript"></script>
+
     </body>
 </html>
