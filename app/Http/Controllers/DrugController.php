@@ -8,24 +8,24 @@ use App\Models\Drug;
 class DrugController extends Controller
 {
     public function index() {
-        return response()->view('drugs', [
+        return response()->view('drugs.index', [
             'drugs' => Drug::all()
         ]);
     }
 
     public function find($id) {
         $drug = Drug::findOrFail($id);
-        return response()->view('drug', compact('drug'));
+        return response()->view('drugs.show', compact('drug'));
     }
 
     public function createForm() {
-        return response()->view('drug_new');
+        return response()->view('drugs.new');
     }
 
     public function create() {
         $name = request()->input('name');
         $code = request()->input('code');
-        $is_active = (request()->input('available'))?:0;
+        $is_active = (request()->input('available'))?true:false;
 
         $drug = new Drug();
         $drug->name = $name;
