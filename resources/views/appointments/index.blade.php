@@ -8,7 +8,7 @@
             <h1>Appointments</h1>
         </div>
         <div class="col text-right">
-            <a href="#" class="btn btn-primary" role="button">+ New</a>
+            <a href="{{ route('appointments.new') }}" class="btn btn-primary" role="button">+ New</a>
         </div>
     </div>
     <form action="">
@@ -16,7 +16,7 @@
             <div class="form-group col">
                 <label>Location</label>
                 <select class="form-control">
-                
+
                     <option>Default select </option>
                 </select>
             </div>

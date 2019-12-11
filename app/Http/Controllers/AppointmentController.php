@@ -11,6 +11,10 @@ class AppointmentController extends Controller
         return response()->view('appointments.index');
     }
 
+    public function createForm() {
+        return response()->view('appointments.new');
+    }
+
 }
 
 
