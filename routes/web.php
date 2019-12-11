@@ -22,7 +22,9 @@ Route::post("drugs/new", "DrugController@create");
 Route::get("drugs/{id}", "DrugController@find")->name('drugs.find');
 Route::get("appointments", "AppointmentController@index")->name('appointments.index');
 Route::get("appointments/new", "AppointmentController@createForm")->name('appointments.new');
+Route::view("appointments/treatments" , "treatments.index")->name('treatments.index');
 
+Route::view("appointments/treatments/new" , "treatments.new")->name('treatments.new');
 
 
 Auth::routes();
