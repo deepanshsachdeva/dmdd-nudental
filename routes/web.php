@@ -20,6 +20,7 @@ Route::get("drugs/new", "DrugController@createForm")->name('drugs.new');
 Route::post("drugs/new", "DrugController@create");
 
 Route::get("drugs/{id}", "DrugController@find")->name('drugs.find');
+Route::get("appointments", "AppointmentController@index")->name('appointments.index');
 
 
 Auth::routes();

@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.app')
 @section('title', 'Create New Drug')
 @section('content')
 <div class="container">
