@@ -21,3 +21,7 @@ Route::post("drugs/new", "DrugController@create");
 
 Route::get("drugs/{id}", "DrugController@find")->name('drugs.find');
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
