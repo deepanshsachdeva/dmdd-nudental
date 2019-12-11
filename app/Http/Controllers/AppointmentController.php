@@ -39,25 +39,41 @@ class AppointmentController extends Controller
 
         if ($q_location || $q_provider || $q_patient || $q_status || $q_status || $q_date) {
             $query .= " where ";
+
+            $filters = [];
              
             if ($q_location) {
-                $query .= (" office.office_id = ".$q_location);
+                $filters['office.office_id'] = $q_location;
+                // $query .= (" office.office_id = ".$q_location);
             }
 
             if ($q_provider) {
-                $query .= (" provider.provider_id = ".$q_provider);
+                $filters['provider.provider_id'] = $q_provider;
+                // $query .= (" provider.provider_id = ".$q_provider);
             }
             
             if ($q_patient) {
-                $query .= (" patient.patient_id = ".$q_patient);
+                $filters['patient.patient_id'] = $q_patient;
+                // $query .= (" patient.patient_id = ".$q_patient);
             }
 
             if ($q_status) {
-                $query .= (" appointment.status = ".$q_status);
+                $filters['appointment.status'] = $q_status;
+                // $query .= (" appointment.status = ".$q_status);
             }
 
             if ($q_date) {
-                $query .= (" cast(appointment.start_date as date) = '".$q_date."'");
+                $filters['cast(appointment.start_date as date)'] = "'".$q_date."'";
+                // $query .= (" cast(appointment.start_date as date) = '".$q_date."'");
+            }
+            
+            $i = 1;
+            foreach($filters as $filter => $value){
+                if ($i++ > 1) {
+                    $query .= " and ";
+                }
+
+                $query .= " $filter = $value ";
             }
         }
         
@@ -75,8 +91,6 @@ class AppointmentController extends Controller
         ";
 
         $query = $query.$group;
-
-        // dd($query);
 
         $appointments = DB::select($query);
 
