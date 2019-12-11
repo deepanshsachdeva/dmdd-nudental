@@ -27,6 +27,6 @@ Route::view("appointments/treatments" , "treatments.index")->name('treatments.in
 Route::view("appointments/treatments/new" , "treatments.new")->name('treatments.new');
 
 
-Auth::routes();
+Auth::routes(['register' => false, 'reset' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
