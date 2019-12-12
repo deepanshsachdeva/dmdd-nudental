@@ -2,6 +2,11 @@
 @section ('title' , 'appointments')
 @section ('content')
 
+<style>
+tr {
+    font-size: 11px;
+}
+</style>
 <div class="container">
     <div class="row">
         <div class="col">

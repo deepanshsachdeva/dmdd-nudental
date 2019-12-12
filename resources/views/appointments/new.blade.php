@@ -10,7 +10,13 @@
             <a href="{{ route('appointments.index') }}" class="btn btn-secondary" role="button">&larr; Back</a>
         </div>
     </div>
+
+    @if($errors->any())
+        <div class="alert alert-danger mt-3">{{$errors->first()}}</div>
+        @endif
+        
     <div class="row">
+       
         <div class="col-6">
             <form action="{{ route('appointments.new') }}" method="post">
                 @csrf

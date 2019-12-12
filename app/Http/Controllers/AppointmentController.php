@@ -125,13 +125,13 @@ class AppointmentController extends Controller
     }
 
     public function create() {
-        $validatedData = request()->validate([
-            'provider'   => 'required',
-            'patient'    => 'required',
-            'location'   => 'required',
-            'start_date' => 'required|date',
-            'end_date'   => 'required|date|after:start_date'
-        ]);
+        // $validatedData = request()->validate([
+        //     'provider'   => 'required',
+        //     'patient'    => 'required',
+        //     'location'   => 'required',
+        //     'start_date' => 'required|date',
+        //     'end_date'   => 'required|date|after:start_date'
+        // ]);
 
         $provider = request()->input('provider');
         $patient = request()->input('patient');
@@ -140,21 +140,16 @@ class AppointmentController extends Controller
         $end_date = request()->input('end_date');
         $user_id = auth()->user()->user_id;
        
-        $result = DB::select("
-            EXEC dbo.CreateAppointment 
-            @ProviderId=$provider, 
-            @PatientId=$patient, 
-            @RoomId=$location, 
-            @BookingMode='ON', 
-            @StartDate='$start_date',
-            @EndDate='$end_date',
-            @Status='O',
-            @CreatedBy=$user_id"
-        );
-        
-        return redirect()->route('appointments.index');
-    }
+        $result = DB::select("EXEC dbo.proc_create_appointment ?,?,?,?,?,?,?,?", 
+            array( $provider, $patient, $location, 'ON', $start_date, $end_date, 'O', $user_id));
 
+        if(isset($result[0]->Error)) {
+            return redirect()->back()->withErrors($result[0]->Error);
+        }
+        else{
+            return redirect()->route('appointments.index');
+        }
+    }
 }
 
 
