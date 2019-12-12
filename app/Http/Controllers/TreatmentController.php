@@ -66,6 +66,19 @@ class TreatmentController extends Controller
     }
 
     public function create(Appointment $appointment) {
-        //
+        $treatment_catalogue = request()->input('treatment_catalogue');
+        $tooth = request()->input('tooth');
+        $surface = request()->input('surface');
+        $comment = request()->input('comment');
+
+        $result = DB::select("EXEC dbo.proc_create_treatment ?,?,?,?,?", 
+            [$appointment->appointment_id, $treatment_catalogue, $tooth, $surface, $comment]);
+
+        if(isset($result[0]->Error)) {
+            return redirect()->back()->withErrors($result[0]->Error)->withInput();
+        }
+        else{
+            return redirect()->route('treatments.index', $appointment);
+        }
     }
 }

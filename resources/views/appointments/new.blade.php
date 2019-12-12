@@ -13,10 +13,9 @@
 
     @if($errors->any())
         <div class="alert alert-danger mt-3">{{$errors->first()}}</div>
-        @endif
-        
+    @endif
+
     <div class="row">
-       
         <div class="col-6">
             <form action="{{ route('appointments.new') }}" method="post">
                 @csrf
