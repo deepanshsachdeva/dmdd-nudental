@@ -78,7 +78,7 @@
                 <tbody>
                     @foreach($appointments as $appointment)
                     <tr>
-                        <td scope="row"><a href="#">NU{{ $appointment->appointment_id }}</a></td>
+                        <td scope="row"><a href="{{route('appointments.view', $appointment->appointment_id )}}">NU{{ $appointment->appointment_id }}</a></td>
                         <td>{{ $appointment->providers}}</td>
                         <td>{{ $appointment->patient}}</td>
                         <td>{{ $appointment->location }}</td>
