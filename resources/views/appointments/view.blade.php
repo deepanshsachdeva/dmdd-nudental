@@ -4,10 +4,17 @@
 
 
 <div class="container">
-
-    <h1>Appointment NU{{$appointment->appointment_id}}</h1>
+    <div class="row">
+        <div class="col">
+            <h1>Appointment NU{{$appointment->appointment_id}}</h1>
+        </div>
+        <div class="col text-right">
+            <a href="{{ route('treatments.index', $appointment->appointment_id) }}" class="btn btn-primary" role="button">Treatments</a>
+            <a href="{{ route('appointments.index') }}" class="btn btn-secondary" role="button">&larr; Back</a>
+        </div>
+    </div>
+    
     <h2>Timings</h2>
-
     <table class="table table-striped">
         <thead class="thead-dark">
             <tr>
