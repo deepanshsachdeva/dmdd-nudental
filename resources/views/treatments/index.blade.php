@@ -21,6 +21,7 @@
                         <th scope="col">Name</th>
                         <th scope="col">Tooth</th>
                         <th scope="col">Surface</th>
+                        <th scope="col">Comment</th>
                         <th scope="col">Created On</th>
                     </tr>
                 </thead>
@@ -31,6 +32,7 @@
                         <td>{{ $treatment->treatment_name }}</td>
                         <td>{{ ($treatment->tooth_code) ?: 'NA' }}</td>
                         <td>{{ ($treatment->surface_code) ?: 'NA' }}</td>
+                        <td>{{ ($treatment->comment) ?: 'NA' }}</td>
                         <td>{{ $treatment->created_at }}</td>
                     </tr>
                     @endforeach

@@ -16,6 +16,7 @@ class TreatmentController extends Controller
                 treatment_catalogue.name as treatment_name,
                 tooth.tooth_code as tooth_code,
                 surface.surface_code as surface_code,
+                treatment.comment,
                 treatment.created_at
             from treatment
             left join tooth on tooth.tooth_id = treatment.tooth_id
@@ -69,10 +70,12 @@ class TreatmentController extends Controller
         $treatment_catalogue = request()->input('treatment_catalogue');
         $tooth = request()->input('tooth');
         $surface = request()->input('surface');
+        $blob_path = request()->input('path');
         $comment = request()->input('comment');
+        $user_id = auth()->user()->user_id;
 
-        $result = DB::select("EXEC dbo.proc_create_treatment ?,?,?,?,?", 
-            [$appointment->appointment_id, $treatment_catalogue, $tooth, $surface, $comment]);
+        $result = DB::select("EXEC dbo.proc_create_treatment ?,?,?,?,?,?,?", 
+            [$appointment->appointment_id, $treatment_catalogue, $tooth, $surface, $blob_path, $comment, $user_id]);
 
         if(isset($result[0]->Error)) {
             return redirect()->back()->withErrors($result[0]->Error)->withInput();
