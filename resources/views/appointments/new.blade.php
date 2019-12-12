@@ -1,7 +1,6 @@
 @extends('layouts.app')
-@section ('title' , 'Create appointment')
+@section ('title' , 'Create Appointment')
 @section ('content')
-
 <div class="container">
     <div class="row">
         <div class="col">
@@ -11,103 +10,93 @@
             <a href="{{ route('appointments.index') }}" class="btn btn-secondary" role="button">&larr; Back</a>
         </div>
     </div>
-    
     <div class="row">
-
         <div class="col-6">
-
-         <form action="" method="post">
+            <form action="{{ route('appointments.new') }}" method="post">
+                @csrf
                 <div class="form-group col">
-                <label>Provider</label>
-                <select class="form-control">
-                    <option>Default select </option>
-                </select>
+                    <label>Provider</label>
+                    <select class="form-control @error('provider') is-invalid @enderror" name="provider">
+                        <option value="" selected>--- Select Provider ---</option>
+                        @foreach($providers as $provider)
+                        <option value="{{ $provider->provider_id }}">{{ $provider->name }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('provider'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('provider') }}
+                    </div>
+                    @endif
                 </div>
-
-                 <div class="form-group col">
-                <label>Patient</label>
-                <select class="form-control">
-                    <option>Default select </option>
-                </select>
-                 </div>
-
-                 <div class="form-group col">
-                <label>Location</label>
-                <select class="form-control">
-                    <option>Default select </option>
-                </select>
-                </div>
-
                 <div class="form-group col">
-                <label>room</label>
-                <select class="form-control">
-                    <option>Default select </option>
-                </select>
+                    <label>Patient</label>
+                    <select class="form-control @error('patient') is-invalid @enderror" name="patient">
+                        <option value="">--- Select Patient ---</option>
+                        @foreach($patients as $patient)
+                        <option value="{{ $patient->patient_id }}">{{ $patient->name }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('patient'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('patient') }}
+                    </div>
+                    @endif
                 </div>
-
-
                 <div class="form-group col">
-                <label>Follow Up Appointment</label>
-                <select class="form-control">
-                    <option>Default select </option>
-                </select>
+                    <label>Location</label>
+                    <select class="form-control @error('location') is-invalid @enderror" name="location">
+                        <option value="">--- Select Location ---</option>
+                        @foreach($locations as $location)
+                        <option value="{{ $location->room_id }}">{{ $location->name }} ({{ $location->room_code }})</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('location'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('location') }}
+                    </div>
+                    @endif
                 </div>
-                
-                 
-                <!-- <input type="date" id="start" name="trip-start"
-                value="2018-07-22"
-                min="2018-01-01" max="2018-12-31">
-                    <input type="time" id="appt" name="appt"
-                min="09:00" max="18:00" required> -->
                 <div class="form-group col">
-                <label for="appt">Choose a time to start appointment:</label>
+                    <label>Start Date & Time:</label>
                     <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
-                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        <input type="text" name="start_date" class="form-control datetimepicker-input @error('start_date') is-invalid @enderror" autocomplete="off" id="datetimepicker1" data-toggle="datetimepicker" data-target="#datetimepicker1"/>
+                        @if($errors->has('start_date'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('start_date') }}
                         </div>
+                        @endif
                     </div>
                 </div>
-
                 <div class="form-group col">
-                <label for="appt">Choose a time end appointment</label>
+                    <label>End Date & Time:</label>
                     <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2"/>
-                        <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        <input type="text" name="end_date" class="form-control datetimepicker-input @error('end_date') is-invalid @enderror" autocomplete="off" id="datetimepicker2" data-toggle="datetimepicker" data-target="#datetimepicker2"/>
+                        @if($errors->has('end_date'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('end_date') }}
                         </div>
+                        @endif
                     </div>
                 </div>
-                
                 <div class="form-group col">
-                <button type="submit" class="btn btn-primary">Create</button>
+                    <button type="submit" class="btn btn-primary">Create</button>
                 </div>
-
-                
-
-                
-
-         </form>
-
+            </form>
         </div>
-
     </div>
 </div>
-
 @endsection
 
-@push('styles')
-<link rel="stylesheet" href="{{ asset('css/datetimepicker.css') }}" />
-@endpush
-
 @push('scripts')
-<script src="{{ asset('js/moment.js') }}"></script>
-<script src="{{ asset('js/tempusdominus-bootstrap-4.min.js') }}"></script>
-
 <script>
     $(function () {
-        $('#datetimepicker1').datetimepicker();
-        $('#datetimepicker2').datetimepicker();
+        $('#datetimepicker1').datetimepicker({
+            format: "YYYY-MM-DD HH:mm:ss"
+        });
+
+        $('#datetimepicker2').datetimepicker({
+            format: "YYYY-MM-DD HH:mm:ss"
+        });
     });
 </script>
 @endpush

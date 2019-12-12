@@ -98,7 +98,61 @@ class AppointmentController extends Controller
     }
 
     public function createForm() {
-        return response()->view('appointments.new');
+        $providers = DB::select("
+            select 
+                provider_id, 
+                concat(fname, ' ', lname) as name 
+            from provider
+        ");
+
+        $patients = DB::select("
+            select 
+                patient_id, 
+                concat(fname, ' ', lname) as name 
+            from patient
+        ");
+
+        $locations = DB::select("
+            select
+                room.room_id,
+                room.room_code,
+                office.name
+            from room 
+            inner join office on room.office_id = office.office_id
+        ");
+
+        return response()->view('appointments.new', compact('providers', 'patients', 'locations'));
+    }
+
+    public function create() {
+        $validatedData = request()->validate([
+            'provider'   => 'required',
+            'patient'    => 'required',
+            'location'   => 'required',
+            'start_date' => 'required|date',
+            'end_date'   => 'required|date|after:start_date'
+        ]);
+
+        $provider = request()->input('provider');
+        $patient = request()->input('patient');
+        $location = request()->input('location');
+        $start_date = request()->input('start_date');
+        $end_date = request()->input('end_date');
+        $user_id = auth()->user()->user_id;
+       
+        $result = DB::select("
+            EXEC dbo.CreateAppointment 
+            @ProviderId=$provider, 
+            @PatientId=$patient, 
+            @RoomId=$location, 
+            @BookingMode='ON', 
+            @StartDate='$start_date',
+            @EndDate='$end_date',
+            @Status='O',
+            @CreatedBy=$user_id"
+        );
+        
+        return redirect()->route('appointments.index');
     }
 
 }
