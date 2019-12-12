@@ -5,10 +5,11 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <h1>Treatments for appointment #NU{{ $appointment->ppointment_id }}</h1>
+            <h1>Treatments for appointment #NU{{ $appointment->appointment_id }}</h1>
         </div>
-        <div class="col text-right">
+        <div class="col-2 text-right">
             <a href="{{ route('treatments.new', $appointment) }}" class="btn btn-primary" role="button">+ New</a>
+            <a href="{{ route('appointments.view', $appointment->appointment_id) }}" class="btn btn-secondary" role="button">&larr; Back</a>
         </div>
     </div>
     <div class="row">
