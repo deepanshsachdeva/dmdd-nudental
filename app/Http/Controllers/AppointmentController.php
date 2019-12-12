@@ -73,8 +73,7 @@ class AppointmentController extends Controller
                 if ($i++ > 1) {
                     $query .= " and ";
                 }
-
-                $query .= " $filter = $value ";
+                $query .= " $filter = '$value' ";
             }
         }
         
@@ -249,7 +248,7 @@ class AppointmentController extends Controller
             array( $provider, $patient, $location, 'ON', $start_date, $end_date, 'O', $user_id));
 
         if(isset($result[0]->Error)) {
-            return redirect()->back()->withErrors($result[0]->Error);
+            return redirect()->back()->withErrors($result[0]->Error)->withInput();
         }
         else{
             return redirect()->route('appointments.index');
