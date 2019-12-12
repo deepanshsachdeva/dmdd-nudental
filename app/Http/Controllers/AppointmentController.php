@@ -28,7 +28,7 @@ class AppointmentController extends Controller
                 concat(office.name, ' - ', room.room_code) as location,
                 appointment.start_date,
                 appointment.end_date,
-                appointment.status,
+                dbo.Appointment_status(appointment.status) as status,
                 appointment.next_appointment_id, 
                 appointment.created_at
             from appointment 
@@ -132,7 +132,7 @@ class AppointmentController extends Controller
                 appointment.appointment_id,
                 appointment.start_date,
                 appointment.end_date,
-                appointment.status,
+                dbo.Appointment_status(appointment.status) as status,
                 appointment.next_appointment_id, 
                 appointment.created_at
             from appointment 
@@ -162,15 +162,13 @@ class AppointmentController extends Controller
             p.lname,
             p.phone,
             p.email,
-            case 
-            when gender = 'M' then 'Male' 
-            when gender = 'F' then 'Female'
-            else 'Other' end as gender ,
+            dbo.Person_Gender(p.gender) as gender,
+            
             LEFT((string_agg(concat(i.name, ','), ' ')), LEN((string_agg(concat(i.name, ','), ' '))) - 1) as insurances     
-            from appointment a 
-            JOIN patient p on a.patient_id = p.patient_id 
-            JOIN patient_insurance pi on pi.patient_id = p.patient_id 
-            JOIN insurance i on i.insurance_id = pi.insurance_id
+            from patient p 
+            JOIN appointment a on a.patient_id = p.patient_id 
+            LEFT JOIN patient_insurance pi on pi.patient_id = p.patient_id 
+            LEFT JOIN insurance i on i.insurance_id = pi.insurance_id
             where appointment_id = $id
             group by
             p.fname,
@@ -180,6 +178,7 @@ class AppointmentController extends Controller
             gender
         "));
 
+        //dd($patient);
         
 
         $providers=DB::select("
@@ -188,10 +187,7 @@ class AppointmentController extends Controller
             p.lname,
             p.phone,
             p.email,
-            case 
-            when gender = 'M' then 'Male' 
-            when gender = 'F' then 'Female'
-            else 'Other' end as gender
+            dbo.Person_Gender(p.gender) as gender
             from provider p 
             JOIN appointment_provider ap on ap.provider_id = p.provider_id 
             where appointment_id = $id
