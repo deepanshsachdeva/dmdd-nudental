@@ -21,8 +21,8 @@ class TreatmentController extends Controller
             left join tooth on tooth.tooth_id = treatment.tooth_id
             left join surface on surface.surface_id = treatment.surface_id
             inner join treatment_catalogue on treatment.treatment_catalogue_id = treatment_catalogue.treatment_catalogue_id
-            where appointment_id = {$appointment->appointment_id}
-        ");
+            where appointment_id = ?
+        ", [$appointment->appointment_id]);
 
         return response()->view('treatments.index', compact('appointment', 'treatments'));
     }
@@ -35,13 +35,25 @@ class TreatmentController extends Controller
             from treatment_catalogue
         ");
 
+        $patient_info = head(DB::select("
+            select
+                case
+                    when datediff(year, patient_secure.dob, getdate()) > 18 then 'S'
+                    else 'P'
+                end as stage
+            from patient
+            inner join patient_secure on patient.patient_id = patient_secure.patient_id
+            where patient.patient_id = ?
+        ", [$appointment->patient_id]));
+
         $teeth = DB::select("
             select
                 tooth_id,
                 tooth_type,
                 tooth_code
             from tooth
-        ");
+            where stage = ?
+        ", [$patient_info->stage]);
 
         $surfaces = DB::select("
             select
