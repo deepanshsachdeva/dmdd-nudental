@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <h1>Treatments</h1>
+            <h1>Treatments for appointment #NU{{ $appointment->ppointment_id }}</h1>
         </div>
         <div class="col text-right">
             <a href="{{ route('treatments.new', $appointment) }}" class="btn btn-primary" role="button">+ New</a>

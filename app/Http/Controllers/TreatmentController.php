@@ -28,7 +28,29 @@ class TreatmentController extends Controller
     }
 
     public function createForm(Appointment $appointment) {
-        return response()->view('treatments.new', compact('appointment'));
+        $treatment_catalogue = DB::select("
+            select
+                treatment_catalogue_id,
+                name
+            from treatment_catalogue
+        ");
+
+        $teeth = DB::select("
+            select
+                tooth_id,
+                tooth_type,
+                tooth_code
+            from tooth
+        ");
+
+        $surfaces = DB::select("
+            select
+                surface_id,
+                surface_code
+            from surface
+        ");
+
+        return response()->view('treatments.new', compact('appointment', 'treatment_catalogue', 'teeth', 'surfaces'));
     }
 
     public function create(Appointment $appointment) {
