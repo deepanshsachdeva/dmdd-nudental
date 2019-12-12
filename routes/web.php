@@ -25,9 +25,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get("appointments", "AppointmentController@index")->name('appointments.index');
     Route::get("appointments/new", "AppointmentController@createForm")->name('appointments.new');
     Route::post("appointments/new", "AppointmentController@create");
-    Route::view("appointments/treatments" , "treatments.index")->name('treatments.index');
 
-    Route::view("appointments/treatments/new" , "treatments.new")->name('treatments.new');
+    Route::get("appointments/{appointment}/treatments" , "TreatmentController@index")->name('treatments.index');
+    Route::get("appointments/{appointment}/treatments/new" , "TreatmentController@createForm")->name('treatments.new');
+    Route::post("appointments/{appointment}/treatments/new" , "TreatmentController@create");
 });
 
 
