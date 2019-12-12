@@ -25,7 +25,7 @@
                     <select class="form-control @error('provider') is-invalid @enderror" name="provider">
                         <option value="" selected>--- Select Provider ---</option>
                         @foreach($providers as $provider)
-                        <option value="{{ $provider->provider_id }}">{{ $provider->name }}</option>
+                        <option value="{{ $provider->provider_id }}"  @if(old('provider') == $provider->provider_id ) selected @endif>{{ $provider->name }}</option>
                         @endforeach
                     </select>
                     @if($errors->has('provider'))
@@ -39,7 +39,7 @@
                     <select class="form-control @error('patient') is-invalid @enderror" name="patient">
                         <option value="">--- Select Patient ---</option>
                         @foreach($patients as $patient)
-                        <option value="{{ $patient->patient_id }}">{{ $patient->name }}</option>
+                        <option value="{{ $patient->patient_id }}" @if(old('patient') == $patient->patient_id ) selected @endif>{{ $patient->name }}</option>
                         @endforeach
                     </select>
                     @if($errors->has('patient'))
@@ -53,7 +53,7 @@
                     <select class="form-control @error('location') is-invalid @enderror" name="location">
                         <option value="">--- Select Location ---</option>
                         @foreach($locations as $location)
-                        <option value="{{ $location->room_id }}">{{ $location->name }} ({{ $location->room_code }})</option>
+                        <option value="{{ $location->room_id }}" @if(old('location') ==$location->room_id ) selected @endif>{{ $location->name }} ({{ $location->room_code }})</option>
                         @endforeach
                     </select>
                     @if($errors->has('location'))
@@ -65,7 +65,7 @@
                 <div class="form-group col">
                     <label>Start Date & Time:</label>
                     <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                        <input type="text" name="start_date" class="form-control datetimepicker-input @error('start_date') is-invalid @enderror" autocomplete="off" id="datetimepicker1" data-toggle="datetimepicker" data-target="#datetimepicker1"/>
+                        <input type="text" name="start_date" value="{{ old('start_date') }}" class="form-control datetimepicker-input @error('start_date') is-invalid @enderror" autocomplete="off" id="datetimepicker1" data-toggle="datetimepicker" data-target="#datetimepicker1"/>
                         @if($errors->has('start_date'))
                         <div class="invalid-feedback">
                             {{ $errors->first('start_date') }}
@@ -76,7 +76,7 @@
                 <div class="form-group col">
                     <label>End Date & Time:</label>
                     <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-                        <input type="text" name="end_date" class="form-control datetimepicker-input @error('end_date') is-invalid @enderror" autocomplete="off" id="datetimepicker2" data-toggle="datetimepicker" data-target="#datetimepicker2"/>
+                        <input type="text" name="end_date" value="{{ old('end_date') }}" class="form-control datetimepicker-input @error('end_date') is-invalid @enderror" autocomplete="off" id="datetimepicker2" data-toggle="datetimepicker" data-target="#datetimepicker2"/>
                         @if($errors->has('end_date'))
                         <div class="invalid-feedback">
                             {{ $errors->first('end_date') }}
