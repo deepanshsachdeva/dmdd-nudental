@@ -56,7 +56,7 @@ tr {
             </div>
             <div class="form-group col">
                 <label>Date</label>
-                <input class="form-control" type="text" name="date" value="{{ request()->input('date') }}">
+                <input class="form-control datetimepicker-input" type="text" name="date" value="{{ request()->input('date') }}" autocomplete="off" id="datetimepicker1" data-toggle="datetimepicker" data-target="#datetimepicker1">
             </div>
         </div>
         <div class="form-group text-right ">
@@ -101,3 +101,13 @@ tr {
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+            format: "YYYY-MM-DD"
+        });
+    });
+</script>
+@endpush
