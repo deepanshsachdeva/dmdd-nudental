@@ -32,7 +32,16 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                    @auth
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('appointments.index') }}">{{ __('Appointments') }}</a>
+                        </li>
+                        @if(Auth::user()->is_admin)
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('drugs.index') }}">{{ __('Drugs') }}</a>
+                        </li>
+                        @endif
+                    @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->

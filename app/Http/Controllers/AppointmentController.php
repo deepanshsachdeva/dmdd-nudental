@@ -73,8 +73,7 @@ class AppointmentController extends Controller
                 if ($i++ > 1) {
                     $query .= " and ";
                 }
-
-                $query .= " $filter = $value ";
+                $query .= " $filter = '$value' ";
             }
         }
         

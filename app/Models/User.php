@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DB;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -50,4 +51,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getIsAdminAttribute() {
+        // return trim($this->username) == 'sysadmin';
+
+        $result = DB::select("select user_id from [user] inner join role on [user].role_id = role.role_id where [user].user_id = ? and role.name = ?", [$this->user_id, 'System Admin']);
+        
+        return head($result);
+    }
 }
