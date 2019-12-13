@@ -23,6 +23,7 @@
                         <th scope="col">Surface</th>
                         <th scope="col">Comment</th>
                         <th scope="col">Created On</th>
+                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,6 +35,13 @@
                         <td>{{ ($treatment->surface_code) ?: 'NA' }}</td>
                         <td>{{ ($treatment->comment) ?: 'NA' }}</td>
                         <td>{{ $treatment->created_at }}</td>
+                        <td>
+                            <form action="{{ route('treatments.delete', [$appointment, $treatment->treatment_id]) }}" method="post" onsubmit="return confirm('Do you really want to delete ?');">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                            </form>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

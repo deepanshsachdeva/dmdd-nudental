@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get("appointments/{appointment}/treatments" , "TreatmentController@index")->name('treatments.index');
     Route::get("appointments/{appointment}/treatments/new" , "TreatmentController@createForm")->name('treatments.new');
     Route::post("appointments/{appointment}/treatments/new" , "TreatmentController@create");
+    Route::delete("appointments/{appointment}/treatments/{id}", "TreatmentController@delete")->name('treatments.delete');
 });
 
 

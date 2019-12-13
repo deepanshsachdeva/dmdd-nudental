@@ -84,4 +84,15 @@ class TreatmentController extends Controller
             return redirect()->route('treatments.index', $appointment);
         }
     }
+
+    public function delete(Appointment $appointment, $id) {
+        $result = DB::select("EXEC dbo.proc_remove_treatment ?", [$id]);
+
+        if(isset($result[0]->Error)) {
+            return redirect()->back()->withErrors($result[0]->Error);
+        }
+        else{
+            return redirect()->route('treatments.index', $appointment);
+        }
+    }
 }
