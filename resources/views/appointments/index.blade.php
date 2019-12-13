@@ -107,7 +107,10 @@ tr {
 <script>
     $(function () {
         $('#datetimepicker1').datetimepicker({
-            format: "YYYY-MM-DD"
+            format: "YYYY-MM-DD",
+            @if(request()->input('date'))
+            date: "{{request()->input('date') }}"
+            @endif
         });
     });
 </script>

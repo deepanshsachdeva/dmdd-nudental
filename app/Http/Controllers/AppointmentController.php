@@ -38,6 +38,8 @@ class AppointmentController extends Controller
             inner join room on room.room_id = appointment.room_id
             inner join office on office.office_id = room.office_id";
 
+        $params = [];
+
         if ($q_location || $q_provider || $q_patient || $q_status || $q_status || $q_date) {
             $query .= " where ";
 
@@ -64,7 +66,7 @@ class AppointmentController extends Controller
             }
 
             if ($q_date) {
-                $filters['cast(appointment.start_date as date)'] = "'".$q_date."'";
+                $filters['cast(appointment.start_date as date)'] = $q_date;
                 // $query .= (" cast(appointment.start_date as date) = '".$q_date."'");
             }
             
@@ -73,7 +75,9 @@ class AppointmentController extends Controller
                 if ($i++ > 1) {
                     $query .= " and ";
                 }
-                $query .= " $filter = '$value' ";
+                $query .= " $filter = ? ";
+                
+                $params[] = $value;
             }
         }
         
@@ -92,7 +96,7 @@ class AppointmentController extends Controller
 
         $query = $query.$group;
 
-        $appointments = DB::select($query);
+        $appointments = DB::select($query, $params);
 
         return response()->view('appointments.index', compact('appointments', 'locations', 'providers', 'patients'));
     }
