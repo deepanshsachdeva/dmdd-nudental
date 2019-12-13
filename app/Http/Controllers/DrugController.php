@@ -59,10 +59,19 @@ class DrugController extends Controller
         $code = request()->input('code');
         $is_active = (request()->input('active'))? true : false;
         $user_id = auth()->user()->user_id;
+        
+        if ($drug->name != $name) {
+            $drug->name = $name;
+        }
 
-        $drug->name = $name;
-        $drug->drug_code = $code;
-        $drug->is_active = $is_active;
+        if ($drug->drug_code != $code) {
+            $drug->drug_code = $code;
+        }
+        
+        if ($drug->is_active != $is_active) {
+            $drug->is_active = $is_active;
+        }
+
         $drug->updated_by = $user_id;
         $drug->save();
 

@@ -3,7 +3,7 @@
 @section ('content')
 
 <div class="container">
-    <div class="row">
+    <div class="row mb-3">
         <div class="col">
             <h1>Treatments for appointment #NU{{ $appointment->appointment_id }}</h1>
         </div>
