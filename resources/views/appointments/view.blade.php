@@ -1,12 +1,10 @@
 @extends('layouts.app')
 @section ('title' , 'View appointment')
 @section ('content')
-
-
 <div class="container">
-    <div class="row">
+    <div class="row mb-3">
         <div class="col">
-            <h1>Appointment NU{{$appointment->appointment_id}}</h1>
+            <h1>Appointment #NU{{$appointment->appointment_id}}</h1>
         </div>
         <div class="col text-right">
             <a href="{{ route('treatments.index', $appointment->appointment_id) }}" class="btn btn-primary" role="button">Treatments</a>
@@ -20,23 +18,17 @@
             <tr>
                 <th scope="col">From</th>
                 <th scope="col">To</th>
-
             </tr>
         </thead>
         <tbody>
-
             <tr>
                 <td scope="row">{{ $appointment->start_date}}</td>
                 <td>{{ $appointment->end_date}}</td>
-
             </tr>
-
         </tbody>
     </table>
 
-
     <h2>Location</h2>
-
     <table class="table table-striped">
         <thead class="thead-dark">
             <tr>
@@ -48,7 +40,6 @@
             </tr>
         </thead>
         <tbody>
-
             <tr>
                 <td scope="row">{{ $location->location_name}}</td>
                 <td>{{ $location->address1}}</td>
@@ -56,13 +47,10 @@
                 <td>{{ $location->state}}</td>
                 <td>{{ $location->zip_code}}</td>
             </tr>
-
         </tbody>
     </table>
 
-
     <h2>Patient</h2>
-
     <table class="table table-striped">
         <thead class="thead-dark">
             <tr>
@@ -87,7 +75,6 @@
     </table>
 
     <h2>Provider</h2>
-
     <table class="table table-striped">
         <thead class="thead-dark">
             <tr>
@@ -101,7 +88,6 @@
             </tr>
         </thead>
         <tbody>
-
             @foreach($provider_data as $provider)
             <tr>
                 <td scope="row">{{ $provider['provider']->fname}}</td>
@@ -110,31 +96,22 @@
                 <td>{{ $provider['provider']->email}}</td>
                 <td>{{ $provider['provider']->gender}}</td>
                 <td>
-                    <ul class="p-0">
+                    <ul>
                         @foreach($provider['specialties'] as $specialty)
-                        <li>
-                            {{$specialty->name}}
-
-                        </li>
+                        <li>{{$specialty->name}}</li>
                         @endforeach
                     </ul>
-
                 </td>
                 <td>
-                <ul class="p-0">
-                    @foreach($provider['licenses'] as $license)
-                    <li>
-                        {{$license->name}}
-
-                    </li>
-                    @endforeach
+                    <ul>
+                        @foreach($provider['licenses'] as $license)
+                        <li>{{$license->name}}</li>
+                        @endforeach
                     </ul>
-                <td>
+                </td>
             </tr>
-
             @endforeach
         </tbody>
     </table>
-
 </div>
 @endsection

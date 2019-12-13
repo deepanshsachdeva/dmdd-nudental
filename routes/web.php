@@ -20,6 +20,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get("drugs/new", "DrugController@createForm")->name('drugs.new');
     Route::post("drugs/new", "DrugController@create");
     Route::get("drugs/{id}", "DrugController@find")->name('drugs.find');
+    Route::get("drugs/{drug}/edit", "DrugController@editForm")->name('drugs.edit');
+    Route::put("drugs/{drug}/edit", "DrugController@edit");
 
     Route::get("appointments", "AppointmentController@index")->name('appointments.index');
     Route::get("appointments/new", "AppointmentController@createForm")->name('appointments.new');

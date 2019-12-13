@@ -8,7 +8,7 @@ tr {
 }
 </style>
 <div class="container">
-    <div class="row">
+    <div class="row mb-3">
         <div class="col">
             <h1>Appointments</h1>
         </div>
@@ -49,9 +49,10 @@ tr {
                 <label>Status</label>
                 <select class="form-control" name="status">
                     <option value="">--- Select Status ---</option>
-                    <option value="B" @if(request()->input('status') == "B")) selected @endif>Booked</option>
                     <option value="O" @if(request()->input('status') == "O")) selected @endif>Open</option>
-                    <option value="C" @if(request()->input('status') == "C")) selected @endif>Cancelled</option>  
+                    <option value="B" @if(request()->input('status') == "B")) selected @endif>Booked</option>
+                    <option value="C" @if(request()->input('status') == "C")) selected @endif>Completed</option>
+                    <option value="X" @if(request()->input('status') == "X")) selected @endif>Cancelled</option>  
                 </select>
             </div>
             <div class="form-group col">
