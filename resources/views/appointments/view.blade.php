@@ -56,9 +56,10 @@
             <tr>
                 <th scope="col">First Name</th>
                 <th scope="col">Last Name</th>
+                <th scope="col">Age</th>
+                <th scope="col">Gender</th>
                 <th scope="col">Phone</th>
                 <th scope="col">Email</th>
-                <th scope="col">Gender</th>
                 <th scope="col">Insurance</th>
             </tr>
         </thead>
@@ -66,9 +67,10 @@
             <tr>
                 <td scope="row">{{ $patient->fname}}</td>
                 <td>{{ $patient->lname}}</td>
+                <td>{{ $patient->age}}</td>
+                <td>{{ $patient->gender}}</td>
                 <td>{{ $patient->phone}}</td>
                 <td>{{ $patient->email}}</td>
-                <td>{{ $patient->gender}}</td>
                 <td>{{ $patient->insurances}}</td>
             </tr>
         </tbody>

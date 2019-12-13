@@ -96,11 +96,13 @@
 <script>
     $(function () {
         $('#datetimepicker1').datetimepicker({
-            format: "YYYY-MM-DD HH:mm:ss"
+            format: "YYYY-MM-DD HH:mm:ss",
+            defaultDate: moment().second(0),
         });
 
         $('#datetimepicker2').datetimepicker({
-            format: "YYYY-MM-DD HH:mm:ss"
+            format: "YYYY-MM-DD HH:mm:ss",
+            defaultDate: moment().second(0).add(30, 'm'),
         });
     });
 </script>

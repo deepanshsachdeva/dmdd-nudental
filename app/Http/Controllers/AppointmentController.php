@@ -32,11 +32,11 @@ class AppointmentController extends Controller
                 appointment.next_appointment_id, 
                 appointment.created_at
             from appointment 
-            inner join appointment_provider on appointment_provider.appointment_id = appointment.appointment_id
-            inner join provider on provider.provider_id = appointment_provider.provider_id
-            inner join patient on appointment.patient_id = patient.patient_id
-            inner join room on room.room_id = appointment.room_id
-            inner join office on office.office_id = room.office_id";
+            left join appointment_provider on appointment_provider.appointment_id = appointment.appointment_id
+            left join provider on provider.provider_id = appointment_provider.provider_id
+            left join patient on appointment.patient_id = patient.patient_id
+            left join room on room.room_id = appointment.room_id
+            left join office on office.office_id = room.office_id";
 
         $params = [];
 
@@ -166,10 +166,11 @@ class AppointmentController extends Controller
             p.phone,
             p.email,
             dbo.Person_Gender(p.gender) as gender,
-            
+            datediff(year, ps.dob, getdate()) as age,
             LEFT((string_agg(concat(i.name, ','), ' ')), LEN((string_agg(concat(i.name, ','), ' '))) - 1) as insurances     
             from patient p 
-            JOIN appointment a on a.patient_id = p.patient_id 
+            LEFT JOIN patient_secure ps on ps.patient_id = p.patient_id 
+            LEFT JOIN appointment a on a.patient_id = p.patient_id 
             LEFT JOIN patient_insurance pi on pi.patient_id = p.patient_id 
             LEFT JOIN insurance i on i.insurance_id = pi.insurance_id
             where appointment_id = $id
@@ -178,11 +179,9 @@ class AppointmentController extends Controller
             p.lname,
             p.phone,
             p.email,
+            ps.dob,
             gender
-        "));
-
-        //dd($patient);
-        
+        "));        
 
         $providers=DB::select("
             Select 
