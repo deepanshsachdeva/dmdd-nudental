@@ -53,10 +53,23 @@ class User extends Authenticatable
     ];
 
     public function getIsAdminAttribute() {
-        // return trim($this->username) == 'sysadmin';
-
         $result = DB::select("select user_id from [user] inner join role on [user].role_id = role.role_id where [user].user_id = ? and role.name = ?", [$this->user_id, 'System Admin']);
         
         return head($result);
+    }
+
+    /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = ['role'];
+
+    /**
+     * Relationships
+     * 
+     */
+    public function role() {
+        return $this->belongsTo(Role::class, 'role_id', 'role_id');
     }
 }
